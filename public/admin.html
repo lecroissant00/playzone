@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayZone Admin - Tableau de Bord</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%236200ea'>⚙️</text></svg>">
+    <style>
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+        .admin-sidebar {
+            width: 250px;
+            background-color: var(--surface-dark);
+            border-right: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+            overflow-y: auto;
+        }
+        .admin-main {
+            flex: 1;
+            padding: var(--spacing-2xl);
+            overflow-y: auto;
+        }
+        .admin-nav-item {
+            display: block;
+            padding: var(--spacing-md);
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        .admin-nav-item:hover,
+        .admin-nav-item.active {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+        .admin-card {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .admin-card h3 {
+            margin-bottom: var(--spacing-md);
+            color: var(--secondary-color);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        .stat-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            color: var(--text-primary);
+        }
+        .stat-box .number {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+        .stat-box .label {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--spacing-lg);
+        }
+        .table thead {
+            background-color: var(--surface-light);
+        }
+        .table th {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+        .table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .table tbody tr:hover {
+            background-color: var(--surface-light);
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="logo">⚙️ PlayZone Admin</div>
+                <nav class="nav">
+                    <a href="/">← Site Principal</a>
+                    <a href="#" id="logoutBtn">Déconnexion</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Admin Layout -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <div class="admin-sidebar">
+                <div class="admin-nav-item active" onclick="showSection('dashboard')">📊 Tableau de Bord</div>
+                <div class="admin-nav-item" onclick="showSection('categories')">📂 Catégories</div>
+                <div class="admin-nav-item" onclick="showSection('ads')">📢 Publicités</div>
+                <div class="admin-nav-item" onclick="showSection('pages')">📄 Pages</div>
+                <div class="admin-nav-item" onclick="showSection('analytics')">📈 Statistiques</div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="admin-main">
+                <!-- Login Section -->
+                <div id="loginSection">
+                    <div class="container-sm">
+                        <h1>Connexion Admin</h1>
+                        <form id="loginForm" class="admin-card">
+                            <div class="form-group">
+                                <label for="username">Nom d'utilisateur</label>
+                                <input type="text" id="username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Connexion</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <div id="dashboardSection" class="hidden">
+                    <h1>Tableau de Bord</h1>
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+
+                <!-- Categories Section -->
+                <div id="categoriesSection" class="hidden">
+                    <h1>Gestion des Catégories</h1>
+                    <div class="admin-card">
+                        <h3>Ajouter une Catégorie</h3>
+                        <form id="categoryForm">
+                            <div class="form-group">
+                                <label for="catName">Nom</label>
+                                <input type="text" id="catName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="catDesc">Description</label>
+                                <textarea id="catDesc"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="catIcon">Icône Emoji</label>
+                                <input type="text" id="catIcon" placeholder="🎮">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </form>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Catégories Existantes</h3>
+                        <table class="table" id="categoriesTable">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Icône</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesList"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Ads Section -->
+                <div id="adsSection" class="hidden">
+                    <h1>Gestion des Publicités</h1>
+                    <div class="admin-card">
+                        <h3>Publicités Actives</h3>
+                        <table class="table" id="adsTable">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adsList"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pages Section -->
+                <div id="pagesSection" class="hidden">
+                    <h1>Gestion des Pages</h1>
+                    <div class="admin-card">
+                        <h3>Pages Existantes</h3>
+                        <table class="table" id="pagesTable">
+                            <thead>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Slug</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pagesList"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analyticsSection" class="hidden">
+                    <h1>Statistiques</h1>
+                    <div class="admin-card">
+                        <h3>Vues Récentes</h3>
+                        <canvas id="analyticsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>

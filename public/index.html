@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayZone - Portail de Jeux HTML5 Gratuits</title>
+    <meta name="description" content="Découvrez des centaines de jeux HTML5 gratuits sur PlayZone. Action, aventure, puzzle et bien d'autres genres à jouer directement dans votre navigateur.">
+    <meta name="keywords" content="jeux html5, jeux gratuits, jeux en ligne, gaming">
+    <meta name="author" content="PlayZone Team">
+    <meta property="og:title" content="PlayZone - Portail de Jeux HTML5 Gratuits">
+    <meta property="og:description" content="Des centaines de jeux HTML5 gratuits à jouer directement dans votre navigateur.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%236200ea'>🎮</text></svg>">
+</head>
+<body>
+    <div id="root">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="logo">🎮 PlayZone</div>
+                <nav class="nav">
+                    <a href="/">Accueil</a>
+                    <a href="#popular">Populaires</a>
+                    <a href="#categories">Catégories</a>
+                    <a href="/page/about">À Propos</a>
+                    <a href="/admin">Admin</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1>Bienvenue sur PlayZone</h1>
+            <p>Découvrez des centaines de jeux HTML5 gratuits</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Rechercher un jeu...">
+                <button class="btn btn-secondary" id="searchBtn">🔍 Rechercher</button>
+            </div>
+        </section>
+
+        <!-- Featured Games -->
+        <section class="container">
+            <h2>🌟 Jeux En Vedette</h2>
+            <div class="games-grid" id="featuredGames"></div>
+        </section>
+
+        <!-- Popular Games -->
+        <section class="container" id="popular">
+            <h2>🔥 Jeux Populaires</h2>
+            <div class="games-grid" id="popularGames"></div>
+        </section>
+
+        <!-- New Games -->
+        <section class="container">
+            <h2>✨ Nouveaux Jeux</h2>
+            <div class="games-grid" id="newGames"></div>
+        </section>
+
+        <!-- Categories -->
+        <section class="container" id="categories">
+            <h2>📂 Catégories</h2>
+            <div class="row" id="categoriesList"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>À Propos</h4>
+                        <ul>
+                            <li><a href="/page/about">À Propos de PlayZone</a></li>
+                            <li><a href="/page/contact">Nous Contacter</a></li>
+                            <li><a href="/page/careers">Carrières</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Légal</h4>
+                        <ul>
+                            <li><a href="/page/privacy">Politique de Confidentialité</a></li>
+                            <li><a href="/page/terms">Conditions d'Utilisation</a></li>
+                            <li><a href="/page/dmca">Signalement DMCA</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Communauté</h4>
+                        <ul>
+                            <li><a href="#">Discord</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Facebook</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 PlayZone. Tous droits réservés. | Conçu avec ❤️ pour les gamers</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+</html>
